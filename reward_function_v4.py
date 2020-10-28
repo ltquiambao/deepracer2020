@@ -40,14 +40,13 @@ def reward_function(params):
     farther_from_front_car = (distance_from_front_car / MIN_DISTANCE)
 
     if all_wheels_on_track and direction_diff < DIRECTION_THRESHOLD:
-        reward += faster + closer_to_center
-        reward += steering_correctly
+        reward += faster + closer_to_center + steering_correctly
     else:
-        reward -= (speed ** 2) + (distance_from_center ** 2) + (direction_diff ** 2)
+        reward += 0.01
 
     if not (distance_from_front_car < MIN_DISTANCE and (objects_left_of_center[front_car] == is_left_of_center)):
         reward += farther_from_front_car
     else:
-        reward -= distance_from_front_car
+        reward += 0.01
 
     return float(reward)
